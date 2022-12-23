@@ -1,5 +1,6 @@
 # currency_rates_analysis
-Project implemented via ApacheAirflow
+##Project implemented via ApacheAirflow.
+
 This project implements day-by-day API requesting of currency rates based on the currency list with it further analysis. 
 There are 3 total DAGS, one to create data base envirement (dag_create_db), to drop data base envirement (dag_drop_db) and main DAG for requeistng and analysis (dag_data_collection).
 Below you can find description of the tasks in dag_data_collection DAG:
