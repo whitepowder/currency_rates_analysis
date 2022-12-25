@@ -19,12 +19,14 @@ key = vrs["key"]
 
 def procedures_init():
     for file in os.listdir('dags/sql'):
-        pg = PostgresOperator(
-            task_id='init',
-            postgres_conn_id='postgres_localhost',
-            sql=f'sql/{file}'
-        )
-        pg.execute(dict())
+        with open('dags/sql/'+file) as my_file:
+            sql_query = my_file.read()
+            pg = PostgresOperator(
+                task_id='init',
+                postgres_conn_id='postgres_localhost',
+                sql=sql_query
+            )
+            pg.execute(dict())
 
 
 def currency_data_fill_up():
