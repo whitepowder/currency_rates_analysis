@@ -2,14 +2,15 @@ import requests
 import json
 import pandas as pd
 from sqlalchemy import create_engine
-from utils.params import db_engine, db_schema
+from dataclasses import dataclass
 
-conn = create_engine(db_engine)
+from params import db_engine, db_schema
+
+engine = create_engine(db_engine)
 
 
+@dataclass
 class ApiCall:
-    def __init__(self, url=None):
-        self._url = url
 
     def get_data(self, url):
         response = requests.get(f"{url}")
@@ -26,9 +27,11 @@ class ApiCall:
             df = pd.DataFrame(data).drop(['base', 'success', 'timestamp', 'historical'], axis=1)
             df.reset_index(inplace=True)
             df.columns = ['currency', 'date', 'rates']
-            df.to_sql("temp_table", con=conn, if_exists="append", index=False)
+            with engine.connect() as conn:
+                df.to_sql("temp_table", con=conn, if_exists="append", index=False)
         else:
             df = pd.DataFrame(data).drop(['success', 'symbols'], axis=1)
             df.reset_index(inplace=True)
             df.columns = ['currency']
-            df.to_sql("currency_data", con=conn, schema=db_schema, if_exists="append", index=False)
+            with engine.connect() as conn:
+                df.to_sql("currency_data", con=conn, schema=db_schema, if_exists="append", index=False)
