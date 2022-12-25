@@ -11,17 +11,14 @@ class ApiCall:
     def __init__(self, api=None):
         self._api = api
 
-    def get_data(self, api):
-        response = requests.get(f"{api}")
+    def get_data(self, url):
+        response = requests.get(f"{url}")
         if response.status_code == 200:
             print("Success")
-            self.formatted(response.json())
+            self.to_sql(response.json())
         else:
             print(
                 f"Error - {response.status_code}")
-
-    def formatted(self, data):
-        self.to_sql(data)
 
     @staticmethod
     def to_sql(data):
