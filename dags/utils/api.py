@@ -4,7 +4,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from dataclasses import dataclass
 
-from params import db_engine, db_schema
+from utils.params import db_engine, db_schema
 
 engine = create_engine(db_engine)
 
