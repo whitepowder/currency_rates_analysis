@@ -8,8 +8,8 @@ conn = create_engine(db_engine)
 
 
 class ApiCall:
-    def __init__(self, api=None):
-        self._api = api
+    def __init__(self, url=None):
+        self._url = url
 
     def get_data(self, url):
         response = requests.get(f"{url}")
