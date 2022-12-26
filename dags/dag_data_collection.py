@@ -7,7 +7,6 @@ try:
     from airflow.hooks.postgres_hook import PostgresHook
     from airflow.operators.postgres_operator import PostgresOperator
     from datetime import datetime
-    import pandas as pd
     from utils import api, features_cal
 
     print("All Dag utils are ok ......")
