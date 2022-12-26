@@ -5,7 +5,7 @@ try:
     from airflow.operators.postgres_operator import PostgresOperator
     from airflow.operators.python_operator import PythonOperator
     from datetime import datetime
-    from utils import api as api
+    from utils import api
     import os
 
     print("All Dag utils are ok ......")
