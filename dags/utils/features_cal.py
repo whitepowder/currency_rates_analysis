@@ -18,7 +18,6 @@ class Feature:
                 df['expanding_average'] = df['rate'].expanding().mean()
                 db_name = f"{currency}_features"
                 df.to_sql(db_name.lower(), con=conn, schema=db_schema, if_exists="replace", index=False)
-                df.to_sql(db_name.lower(), con=conn, schema=db_schema, if_exists="replace", index=False)
 
 
 if __name__ == "__main__":
