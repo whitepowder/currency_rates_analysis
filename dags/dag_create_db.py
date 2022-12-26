@@ -6,7 +6,6 @@ try:
     from airflow.operators.python_operator import PythonOperator
     from datetime import datetime
     from utils import api as api
-    from utils.params import currency_link
     import os
 
     print("All Dag utils are ok ......")
@@ -30,9 +29,9 @@ def procedures_init():
 
 
 def currency_data_fill_up():
-    link = currency_link + key
-    request = api.ApiCall()
-    request.get_data(link)
+    endpoint = 'symbols'
+    request = api.ApiCall(key)
+    request.get_data(endpoint)
 
 
 with DAG(
