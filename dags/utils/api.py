@@ -3,17 +3,20 @@ import json
 import pandas as pd
 from sqlalchemy import create_engine
 from dataclasses import dataclass
-
-from utils.params import db_engine, db_schema
+from utils.params import db_engine, db_schema, url
 
 engine = create_engine(db_engine)
 
 
 @dataclass
 class ApiCall:
+    apikey: str
 
-    def get_data(self, url):
-        response = requests.get(f"{url}")
+    def get_data(self, endpoint):
+        headers = {
+            "apikey": self.apikey
+        }
+        response = requests.get(url + endpoint, headers=headers)
         if response.status_code == 200:
             print("Success")
             self.to_sql(response.json())
