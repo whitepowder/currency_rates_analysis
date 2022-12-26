@@ -35,3 +35,7 @@ class ApiCall:
             df.columns = ['currency']
             with engine.connect() as conn:
                 df.to_sql("currency_data", con=conn, schema=db_schema, if_exists="append", index=False)
+
+
+if __name__ == "__main__":
+    pass
