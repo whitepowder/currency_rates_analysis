@@ -21,23 +21,23 @@ key = vrs["key"]
 def get_currency_list(**context):
     hook = PostgresHook(postgres_conn_id="postgres_localhost")
     df = hook.get_pandas_df(sql="SELECT currency FROM currency_data;")
-    currency_list = list(df['currency'])
-    context['ti'].xcom_push(key='cur_list', value=currency_list[:3])
+    currency_data = list(df['currency'])
+    context['ti'].xcom_push(key='currency_data', value=currency_data)
 
 
 def get_currency_rates(**context):
-    currency_list = context.get('ti').xcom_pull(key='cur_list')
+    currency_data = context.get('ti').xcom_pull(key='currency_data')
     today = context['ds']
-    for currency in currency_list:
-        link = f"https://api.apilayer.com/fixer/{today}?symbols={currency}&base=USD&apikey={key}"
-        request = api.ApiCall()
-        request.get_data(link)
+    for currency in currency_data:
+        endpoint = f"{today}?symbols={currency}&base=USD"
+        request = api.ApiCall(key)
+        request.get_data(endpoint)
 
 
 def features_collection(**context):
-    currency_list = context.get('ti').xcom_pull(key='cur_list')
+    currency_data = context.get('ti').xcom_pull(key='currency_data')
     features = features_cal.Feature()
-    features.feature_calc(currency_list)
+    features.feature_calc(currency_data)
 
 
 with DAG(
