@@ -11,8 +11,8 @@ class Feature:
 
     @staticmethod
     def feature_calc(currency_data):
-        for currency in currency_data:
-            with engine.connect() as conn:
+        with engine.connect() as conn:
+            for currency in currency_data:
                 df = pd.read_sql(features_query + f"""'{currency}'""", con=conn)
                 df['moving_average'] = df['rate'].rolling(window=2, center=True).mean()
                 df['expanding_average'] = df['rate'].expanding().mean()
