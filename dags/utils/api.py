@@ -12,7 +12,7 @@ engine = create_engine(db_engine)
 class ApiCall:
     apikey: str
 
-    def get_data(self, endpoint):
+    def get_data(self, endpoint: str):
         headers = {
             "apikey": self.apikey
         }
