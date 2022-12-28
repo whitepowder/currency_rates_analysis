@@ -25,7 +25,7 @@ class ApiCall:
                 f"Error - {response.status_code}")
 
     @staticmethod
-    def to_sql(data):
+    def to_sql(data: dict):
         if 'historical' in json.dumps(data, sort_keys=True, indent=4):
             df = pd.DataFrame(data).drop(['base', 'success', 'timestamp', 'historical'], axis=1)
             df.reset_index(inplace=True)
