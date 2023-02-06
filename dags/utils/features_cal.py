@@ -1,3 +1,4 @@
+from typing import List
 import pandas as pd
 from sqlalchemy import create_engine
 from dataclasses import dataclass
@@ -10,7 +11,7 @@ engine = create_engine(db_engine)
 class Feature:
 
     @staticmethod
-    def feature_calc(currency_data: list[str]):
+    def feature_calc(currency_data: List[str]):
         with engine.connect() as conn:
             for currency in currency_data:
                 df = pd.read_sql(features_query + f"""'{currency}'""", con=conn)
